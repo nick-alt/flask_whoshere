@@ -2,9 +2,9 @@
 
 {% block content %}
 
-        <h1>Hello, {{ user.username }}!</h1>
+        <h1>Hello, {{ current_user.username }}!</h1>
         {% for event in events %}
-        <div><p>{{ event.event_name }} had  {{event.body}} </p></div>
+        <div><p>{{ event.eventname }} </p></div>
         {% endfor %} 
 
  {% endblock %}
