@@ -8,9 +8,10 @@
     </head>
     <body>
         <div> 
-          <a href="{{ url_for('index') }}">Events</a>
+            <a href="{{ url_for('index') }}">Whoshere</a>
           <a href="{{ url_for('login') }}">Login</a>
           <a href="{{ url_for('logout') }}">Logout</a>
+          <a href="{{ url_for('user', username=current_user.username) }}">My Events</a>
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}

@@ -1,0 +1,33 @@
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        
+<div><a href="{{url_for('index')}}">Whoshere</a></div>
+    <h1>Your Message</h1>
+    <form action="" method="post">
+        <p>
+            {{ form.messagesubject.label }}<br>
+            {{ form.messagesubject(size=32) }}<br>
+            {% for error in form.messagesubject.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.messagebody.label }}<br>
+            {{ form.messagebody(size=64) }}<br>
+            {% for error in form.messagebody.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

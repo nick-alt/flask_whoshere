@@ -1,10 +1,13 @@
-{% extends "base.html" %}
 
-{% block content %}
-
-        <h1>Hello, {{ current_user.username }}!</h1>
-        {% for event in events %}
-        <div><p>{{ event.eventname }} </p></div>
-        {% endfor %} 
-
- {% endblock %}
+ <html>
+    <head>
+      <title>Whoshere</title>
+    </head>
+    <body>
+        <div><a href="{{ url_for('login') }}">Login</a></div>
+        <div><a href="{{ url_for('user', username=current_user.username)}}">My Events</a></div>
+        <hr>
+        <h1>Welcome at Whoshere</h1>
+        <div><a href="{{ url_for('register')}}"> Create Event </a> </div>
+    </body>
+</html>
