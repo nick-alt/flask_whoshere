@@ -28,7 +28,7 @@ class User(UserMixin, db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     eventname = db.Column(db.String(64))
-    eventdate = db.Column(flaskdb.DateTime, index=True)
+    eventdate = db.Column(db.DateTime, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     eventtimestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     attendees = db.relationship('Attendee', backref='attendee', lazy='dynamic')

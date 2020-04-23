@@ -50,6 +50,7 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     form = EventForm()
+    
     if form.validate_on_submit():
         event = Event(eventname = form.eventname.data, eventdate = form.eventdate.data, host = current_user )
         db.session.add(event)
@@ -57,11 +58,8 @@ def user(username):
         flash('You created a new event!')
         return redirect(url_for('user', username=current_user.username))
 
-    events=[
-        {'host': user, 'eventname': 'Testevent1'},
-        {'host': user, 'eventname': 'Testevent1'}
-     ]
-    return render_template('user.html', form=form, events=events)
+   # events = Event.query.all(host = current_user)
+    return render_template('user.html', form=form)
 
 @app.route('/attend', methods=['GET', 'POST'])
 def attend():
