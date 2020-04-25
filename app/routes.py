@@ -1,10 +1,12 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegistrationForm, AttendForm, MessageForm, EventForm
+from app.forms import LoginForm, RegistrationForm, AttendForm, MessageForm, EventForm, EditEventForm, DeleteEventForm
 from flask_login import current_user, login_user, logout_user
 from app.models import User, Event, Attendee, Message
 from flask_login import login_required
+from operator import itemgetter, attrgetter, methodcaller
 from app import db
+
 
 
 @app.route ('/')
@@ -51,6 +53,8 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     form = EventForm()
     
+    events = Event.query.filter_by(host=user).order_by(Event.eventdate).all()
+
     if form.validate_on_submit():
         event = Event(eventname = form.eventname.data, eventdate = form.eventdate.data, host = current_user )
         db.session.add(event)
@@ -58,8 +62,8 @@ def user(username):
         flash('You created a new event!')
         return redirect(url_for('user', username=current_user.username))
 
-   # events = Event.query.all(host = current_user)
-    return render_template('user.html', form=form)
+
+    return render_template('user.html', form=form, events=events)
 
 @app.route('/attend', methods=['GET', 'POST'])
 def attend():
@@ -81,3 +85,35 @@ def message():
         flash('your message was send to the host')
         return redirect (url_for('message'))
     return render_template('message.html', title= 'message', form=form)
+
+@app.route('/event/<event_id>', methods=['GET', 'POST'])
+@login_required
+
+def event(event_id):
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    form = EditEventForm()
+    
+    if form.validate_on_submit():
+        event.eventname = form.eventname.data
+        event.eventdate = form.eventdate.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('user', username=current_user.username))
+    elif request.method == 'GET':
+        form.eventname.data = event.eventname
+        form.eventdate.data = event.eventdate
+    return render_template('event.html', title='Edit Event',form=form, event=event)
+
+@app.route('/deleteevent/<event_id>', methods=['GET', 'POST'])
+@login_required
+
+def deleteevent(event_id):
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    form = DeleteEventForm()
+
+    if form.validate_on_submit():
+        db.session.delete(event)
+        db.session.commit()
+        flash('you deleted the event')
+        return redirect(url_for('user', username=current_user.username))
+    return render_template('deleteevent.html', title='Edit Event',form=form, event=event)

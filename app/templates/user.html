@@ -21,10 +21,26 @@
                 {% endfor %}
             </p>
              <p>{{ form.submit() }}</p>
-        
-        {% for event in events %}
-        <p>
-            {{ event.eventname}}
-        </p>
-        {% endfor%}
+        <table>
+            <thread>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Event Date</th>
+                    <th>Attendance Number</th>
+                    <th>New Messages</th>
+                </tr>
+            </thread>
+            <tbody>{%for event in events%}
+                <tr>
+                    <td>{{event.eventname}}</td>
+                    <td>{{event.eventdate}}</td> 
+                    <td>0</td> 
+                    <td>0</td> 
+                    <td><a href= "{{ url_for('event', event_id=event.id) }}">Edit</a></td>
+                    <td><a href= "{{ url_for('deleteevent', event_id=event.id) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
  {% endblock %}

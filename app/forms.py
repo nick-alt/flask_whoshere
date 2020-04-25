@@ -43,3 +43,12 @@ class EventForm(FlaskForm):
     eventname = StringField('Event Name', validators=[DataRequired()])
     eventdate = DateField('Event Date', format='%Y-%m-%d')
     submit = SubmitField('Create Event')
+
+class EditEventForm(FlaskForm):
+    eventname = StringField('Event Name', validators=[DataRequired()])
+    eventdate = DateField('Event Date', format='%Y-%m-%d')
+    submit = SubmitField('Edit Event')
+
+class DeleteEventForm(FlaskForm):
+    confirm = BooleanField('Are You Sure?', validators=[DataRequired()])
+    submit = SubmitField ('Delete Event')

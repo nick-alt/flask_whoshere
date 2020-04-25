@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
       {% if title %}
       <title>{{ title }} - Whoshere</title>
       {% else %}
@@ -24,6 +25,7 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     </body>
 </html>
     

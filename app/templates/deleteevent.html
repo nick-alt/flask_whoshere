@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <h1>Delete: {{event.eventname}}</h1>
+        <hr>
+        <a href= "{{ url_for('user', username=current_user.username) }}">Cancel</a>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.confirm.label}} <br>
+                {{form.confirm}}
+                {% for error in form.confirm.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            
+             <p>{{ form.submit() }}</p>
+        
+ {% endblock %}
