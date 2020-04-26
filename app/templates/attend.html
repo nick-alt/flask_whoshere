@@ -1,31 +1,25 @@
-{% block content %}
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-          {% for message in messages %}
-          <li>{{message}}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        
-<div><a href="{{url_for('index')}}">Whoshere</a></div>
-    <h1>I'm here</h1>
-    <form action="" method="post">
-        <p>
-            {{ form.attendeename.label }}<br>
-            {{ form.attendeename(size=32) }}<br>
-            {% for error in form.attendeename.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.attendeeemail.label }}<br>
-            {{ form.attendeeemail(size=64) }}<br>
-            {% for error in form.attendeeemail.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+{% extends "base.html" %}
 
+{% block content %}
+
+        <h1>Attend: </h1>
+        <hr>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.attendeename.label}} <br>
+                {{form.attendeename}}
+                {% for error in form.attendeename.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.attendeeemail.label}} <br>
+                {{form.attendeeemail}}
+                {% for error in form.attendeeemail.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+             <p>{{ form.submit() }}</p>
+
+ {% endblock %}

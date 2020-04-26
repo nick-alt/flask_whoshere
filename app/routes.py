@@ -65,17 +65,18 @@ def user(username):
 
     return render_template('user.html', form=form, events=events)
 
-@app.route('/attend', methods=['GET', 'POST'])
-def attend():
+@app.route('/attend/<eventname>/<event_id>', methods=['GET', 'POST'])
+def attend(eventname,event_id):
+    event = Event.query.filter_by(id=event_id).first_or_404()
     form = AttendForm()
     if form.validate_on_submit():
-        attendee = Attendee(attendeename=form.attendeename.data, attenndeeemail=form.attendeeemail.data)
+        attendee = Attendee(attendeename=form.attendeename.data, attendeeemail=form.attendeeemail.data)
         db.session.add(attendee)
         db.session.commit()
-        flash('you are added to the attendance list!')
+        flash("you've been added to the attendance list!")
     return render_template('attend.html', title= "I'm here", form=form)
 
-@app.route('/message', methods=['GET', 'POST'])
+@app.route('/message/<event_id>', methods=['GET', 'POST'])
 def message():
     form = MessageForm()
     if form.validate_on_submit():
@@ -117,3 +118,10 @@ def deleteevent(event_id):
         flash('you deleted the event')
         return redirect(url_for('user', username=current_user.username))
     return render_template('deleteevent.html', title='Edit Event',form=form, event=event)
+
+@app.route('/link/<event_id>', methods=['GET', 'POST'])
+@login_required
+
+def link(event_id):
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    return render_template('link.html', title='Link',event=event)

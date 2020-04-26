@@ -52,3 +52,4 @@ class EditEventForm(FlaskForm):
 class DeleteEventForm(FlaskForm):
     confirm = BooleanField('Are You Sure?', validators=[DataRequired()])
     submit = SubmitField ('Delete Event')
+

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{event.eventname}}</h1>
+<p>
+    <h3>Here is your QR Code the list sign up - just hang it at your event entrance</h3>
+</p>
+<p>
+    <h3>or copy this link manually and send it to your attandees</h3>
+    <a href="{{ url_for('attend', eventname=event.eventname,event_id=event.id) }}">http://nickmichi.de/attend/{{event.eventname}}/{{event.id}}</a>
+</p>
+
+ {% endblock %}

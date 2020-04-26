@@ -36,6 +36,7 @@
                     <td>{{event.eventdate}}</td> 
                     <td>0</td> 
                     <td>0</td> 
+                    <td><a href= "{{ url_for('link', event_id=event.id) }}">Create attendance link</a></td>
                     <td><a href= "{{ url_for('event', event_id=event.id) }}">Edit</a></td>
                     <td><a href= "{{ url_for('deleteevent', event_id=event.id) }}">Delete</a></td>
                 </tr>
