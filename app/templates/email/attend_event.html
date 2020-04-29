@@ -1,0 +1,16 @@
+<p>Hello {{ attendee.attendeename }},</p>
+<p>
+    You signed up for {{event.eventname}}'s attendance list, 
+    you will get now an message if others communicated an COVID-19 Infection after the event or let the others now if you have symptoms.
+    All Communication will be totally anonym and is just meant to give everybody the possibillity to react.
+
+    Send an anonym message to the host and
+    
+
+    <a href="{{ url_for('message', event_id=event.id, _external=True) }}">
+        click here
+    </a>.
+</p>
+
+<p>All the best,</p>
+<p>The Whoshere Team</p>

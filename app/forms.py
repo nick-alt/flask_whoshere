@@ -35,7 +35,6 @@ class AttendForm(FlaskForm):
     submit = SubmitField('Attend')
 
 class MessageForm(FlaskForm):
-    messagesubject = StringField('Subject', validators=[DataRequired()])
     messagebody = TextAreaField('Your message', validators=[DataRequired(), Length(min=1, max=200)])
     submit = SubmitField('Send Message')
 
@@ -53,3 +52,14 @@ class DeleteEventForm(FlaskForm):
     confirm = BooleanField('Are You Sure?', validators=[DataRequired()])
     submit = SubmitField ('Delete Event')
 
+class EditMessageForm(FlaskForm):
+    messagebody = TextAreaField('Edit message', validators=[DataRequired(), Length(min=1, max=200)])
+    submit = SubmitField('Edit Message')
+
+class HostMessage(FlaskForm):
+    messagebody = TextAreaField('Your message', validators=[DataRequired(), Length(min=1, max=200)])
+    submit = SubmitField('Send Message')
+
+class ForwardMessage(FlaskForm):
+    submit =SubmitField('Forward Message')
+    

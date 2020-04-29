@@ -1,0 +1,7 @@
+Hello {{user.username}},
+
+a new message has been send to {{event.eventname}}.
+Look what your attendee has to say and forward the message to the others {{url_for('forwardmessage',event_id=event.is, message_id=message.id)}}
+
+Best,
+Whoshere

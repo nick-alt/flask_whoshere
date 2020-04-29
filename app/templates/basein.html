@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      {% if title %}
+      <title>{{ title }} - Whoshere</title>
+      {% else %}
+      <title>Welcome to Whoshere</title>
+      {% endif %}
+    </head>
+    <body>
+        <div> 
+          <a href="{{ url_for('index') }}">Whoshere</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+          <a href="{{ url_for('user', username=current_user.username) }}">My Events</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+          <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    </body>
+</html>

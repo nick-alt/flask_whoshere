@@ -1,0 +1,9 @@
+Hello,
+
+A message was send to the attendancelist of {{event.eventname}}.
+Message text : {{message.messagebody}}
+
+This is a not reply mail - if you have any questions please ask the host directly.
+
+Best,
+Whoshere Team

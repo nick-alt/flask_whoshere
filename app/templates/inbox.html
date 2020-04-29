@@ -1,0 +1,35 @@
+{% extends "basein.html" %}
+
+{% block content %}
+
+        <h1>User: {{ event.eventname }}!</h1>
+        <hr>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.messagebody.label}} <br>
+                {{form.messagebody}}
+                {% for error in form.messagebody.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+             <p>{{ form.submit() }}</p>
+        <table>
+            <thread>
+                <tr>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thread>
+            <tbody>{%for msg in msgs%}
+                <tr>
+                    <td>{{msg.messagebody}}</td>
+                    <td>{{msg.messagestatus}}</td> 
+                    <td><a href= "{{ url_for('forwardmessage', event_id=events.id, message_id=msg.id) }}">edit message </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+ {% endblock %}

@@ -1,12 +1,12 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegistrationForm, AttendForm, MessageForm, EventForm, EditEventForm, DeleteEventForm
+from app.forms import LoginForm, RegistrationForm, AttendForm, MessageForm, EventForm, EditEventForm, DeleteEventForm, EditMessageForm, HostMessage, ForwardMessage
 from flask_login import current_user, login_user, logout_user
 from app.models import User, Event, Attendee, Message
 from flask_login import login_required
 from operator import itemgetter, attrgetter, methodcaller
 from app import db
-
+from app.email import send_attend_email, forward_message, send_newmessage_email
 
 
 @app.route ('/')
@@ -67,24 +67,33 @@ def user(username):
 
 @app.route('/attend/<eventname>/<event_id>', methods=['GET', 'POST'])
 def attend(eventname,event_id):
+    logout_user()
     event = Event.query.filter_by(id=event_id).first_or_404()
     form = AttendForm()
     if form.validate_on_submit():
-        attendee = Attendee(attendeename=form.attendeename.data, attendeeemail=form.attendeeemail.data)
+        attendee = Attendee(attendeename=form.attendeename.data, event_id=event.id, attendeeemail=form.attendeeemail.data)
         db.session.add(attendee)
         db.session.commit()
+        attendee = Attendee.query.filter_by(attendeeemail=form.attendeeemail.data).first()
+        send_attend_email(attendee, event)
         flash("you've been added to the attendance list!")
-    return render_template('attend.html', title= "I'm here", form=form)
+    return render_template('attend.html', title= "I'm here", form=form, event=event)
 
 @app.route('/message/<event_id>', methods=['GET', 'POST'])
-def message():
+
+def message(event_id):    
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    user = event.host
     form = MessageForm()
     if form.validate_on_submit():
-        message = Message(messagesubject=form.messagesubject.data, messagebody=form.messagebody.data)
+        message = Message(messagesubject='none', messagebody=form.messagebody.data, messagestatus='new', event_id=event.id)
         db.session.add(message)
         db.session.commit()
+        recipient= user.useremail
+        send_newmessage_email(user=user, event=event, message=message, recipient=recipient)
         flash('your message was send to the host')
-        return redirect (url_for('message'))
+
+        
     return render_template('message.html', title= 'message', form=form)
 
 @app.route('/event/<event_id>', methods=['GET', 'POST'])
@@ -125,3 +134,64 @@ def deleteevent(event_id):
 def link(event_id):
     event = Event.query.filter_by(id=event_id).first_or_404()
     return render_template('link.html', title='Link',event=event)
+
+@app.route('/inbox/<event_id>', methods=['GET', 'POST'])
+@login_required
+
+def inbox(event_id):
+    events = Event.query.filter_by(id=event_id).first_or_404()
+    form = HostMessage()
+    msgs = Message.query.filter_by(event=events).order_by(Message.messagetimestamp).all()
+    if form.validate_on_submit():
+        message = Message(messagesubject = 'none', messagebody = form.messagebody.data, messagestatus= 'new', event_id = events.id )
+        db.session.add(message)
+        db.session.commit()
+        flash('You created a new message!')
+        return redirect(url_for('inbox', event_id=events.id))
+    
+
+    return render_template('inbox.html', form=form, events=events, event=event, msgs=msgs)
+
+    
+    
+@app.route('/editmessage/<event_id>/<message_id>', methods=['GET', 'POST'])
+@login_required
+
+def editmessage(event_id, message_id):
+    message = Message.query.filter_by(id=message_id).first_or_404()
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    editform = EditMessageForm()
+    forwardform = ForwardMessage()
+   
+    if editform.validate_on_submit():
+        message.messagebody=editform.messagebody.data
+        db.session.commit()
+        flash('The message has been edited')
+        return redirect(url_for('forwardmessage',event_id=event.id, message_id=message.id))
+   
+    elif request.method == 'GET':
+        editform.messagebody.data = message.messagebody
+
+    return render_template('editmessage.html', title='forward message', event=event, editform=editform, forwardform=forwardform, message=message)
+
+@app.route('/forwardmessage/<event_id>/<message_id>', methods=['GET', 'POST'])
+@login_required
+
+def forwardmessage(event_id, message_id):
+    message = Message.query.filter_by(id=message_id).first_or_404()
+    event = Event.query.filter_by(id=event_id).first_or_404()
+    editform = EditMessageForm()
+    forwardform = ForwardMessage()
+
+    if forwardform.validate_on_submit():
+        attendees=Attendee.query.filter_by(event_id=event_id).all()
+        recipient=[]
+        for attendee in attendees:
+            recipient.append(attendee.attendeeemail)
+        
+        forward_message(event=event, message=message, recipient=recipient)
+        flash('The message has been forwarded!')
+        return redirect(url_for('inbox',event_id=event.id))
+ 
+    
+    return render_template('editmessage.html', title='forward message', event=event, forwardform=forwardform, editform=editform, message=message)

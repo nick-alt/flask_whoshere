@@ -39,8 +39,8 @@ class Event(db.Model):
 
 class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    attendeename = db.Column(db.String(64), index=True, unique=True)
-    attendeeemail = db.Column(db.String(120), index=True, unique=True)
+    attendeename = db.Column(db.String(64), index=True)
+    attendeeemail = db.Column(db.String(120), index=True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     attendeetimestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -51,6 +51,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     messagesubject = db.Column(db.String(40))
     messagebody = db.Column(db.String(200))
+    messagestatus = db.Column(db.String(40))
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     messagetimestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 

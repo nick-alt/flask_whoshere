@@ -1,0 +1,8 @@
+<p>Hello {{user.username}},</p>
+
+<p>a new message has been send to {{event.eventname}}.
+Look what your attendee has to say and forward the message to the others <a href="{{ url_for('inbox', event_id=event.id) }}">here</a>"
+</p>
+
+<p>Best,</p>
+<p>Whoshere</p>
