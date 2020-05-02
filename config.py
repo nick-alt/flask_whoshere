@@ -10,5 +10,5 @@ class Config(object):
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'apikey'
-    MAIL_PASSWORD = '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'
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = 'whoshere.berlin@gmail.com'
