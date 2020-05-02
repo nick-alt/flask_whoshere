@@ -24,7 +24,7 @@ def send_newmessage_email(user,event,message, recipient):
                 text_body=render_template('email/new_message.txt', user=user, event=event, message=message), 
                 html_body=render_template('email/new_message.html', user=user, event=event, message=message)) 
 
-def forward_message(event, message, recipient, user):
+def forward_message(event, message, recipient):
     send_email('[Whoshere] New Message',
                 sender=app.config['MAIL_DEFAULT_SENDER'],
                 recipients=recipient,
