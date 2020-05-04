@@ -14,6 +14,15 @@ from app.email import send_attend_email, forward_message, send_newmessage_email
 def index():
     return render_template('index.html')
 
+@app.route('/imprint')
+def imprint():
+    return render_template('imprint.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     #if current_user.is_authenticated:
