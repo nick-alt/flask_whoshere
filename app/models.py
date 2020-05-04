@@ -8,7 +8,7 @@ from app import login
 class User(UserMixin, db.Model):
     id = db.Column (db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-    useremail = db.Column(db.String(120), index=True, unique=True)
+    useremail = db.Column(db.String(120), index=True)
     password_hash = db.Column(db.String(128))
     event_id = db.Column(db.String(10))
     events = db.relationship('Event', backref='host', lazy='dynamic')
