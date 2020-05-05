@@ -1,0 +1,40 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block title %}
+  {% if title %}<title>{{ title }} - Whoshere</title>{% else %}<title>Welcome to Whoshere</title>{% endif %}
+{% endblock %}
+
+    
+{% block navbar %}
+  <nav class="navbar navbar-default">
+    <a href="{{ url_for('index') }}">Whoshere</a>
+  </nav>
+{% endblock %} 
+
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info" role="alert">{{ message }}</div>
+      {% endfor %}  
+    {% endif %}
+    {% endwith %}    
+    
+    {% block app_content %}{% endblock %}
+  </div>
+
+
+{% block footer %}
+  <footer class="card-footer">
+    <div class="container">
+      <a href=" /imprint">Imprint</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
+  </footer>
+{% endblock %}
+
+{% endblock %}
+

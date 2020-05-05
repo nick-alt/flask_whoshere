@@ -1,29 +1,20 @@
-{% extends "basein.html" %}
+{% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 
-    <h1>message </h1>
+    <h1>Message </h1>
     <p>{{message.messagebody}}</p>
-
-    <form action="{{url_for('editmessage',event_id=event.id, message_id=message.id)}}" method="post">
-            {{ editform.hidden_tag() }}
-           
-                <p>
-                    {{ editform.messagebody.label }}<br>
-                    {{ editform.messagebody(size=64) }}<br>
-                    {% for error in editform.messagebody.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>{{ editform.submit() }}</p>
-            </form>  
-
-    </form>
-
+    <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(editform)}}
+            </div>
+        </div>
     
-    <form action="{{url_for('forwardmessage',event_id=event.id, message_id=message.id)}}" method="post">
-            {{ forwardform.hidden_tag() }}
-            <p>{{ forwardform.submit() }}</p>
-    </form>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(forwardform)}}
+        </div>
+    </div>
+
 
 {% endblock %}

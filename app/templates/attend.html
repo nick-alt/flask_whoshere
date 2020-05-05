@@ -1,25 +1,12 @@
-{% extends "base.html" %}
+{% extends "basespecial.html" %}
 
-{% block content %}
+{% block app_content %}
 
         <h1>Attend: {{event.eventname}}</h1>
-        <hr>
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.attendeename.label}} <br>
-                {{form.attendeename}}
-                {% for error in form.attendeename.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.attendeeemail.label}} <br>
-                {{form.attendeeemail}}
-                {% for error in form.attendeeemail.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-             <p>{{ form.submit() }}</p>
+        <div class="row">
+                <div class="col-md-4">
+                    {{ wtf.quick_form(form)}}
+                </div>
+            </div>
         <p>you will get a confirmation mail with the link to the message </p>
  {% endblock %}

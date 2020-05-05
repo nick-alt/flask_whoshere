@@ -1,28 +1,10 @@
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>sign up</title>
-</head>
+{% extends "basespecial.html" %}
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-  {% for message in messages %}
-  <li>{{message}}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}  
-<div><a href="{{url_for('index')}}">Whoshere</a></div>
+{% block app_content %}
     <h1>Your Message</h1>
-    <form action="" method="post">
-            {{ form.hidden_tag() }}
-        <p>
-            {{ form.messagebody.label }}<br>
-            {{ form.messagebody(size=64) }}<br>
-            {% for error in form.messagebody.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-
+    <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form)}}
+            </div>
+        </div>
+{% endblock %}

@@ -1,33 +1,35 @@
-{% extends "basein.html" %}
+{% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 
-        <h1>User: {{ current_user.username }}!</h1>
+        <h1>Welcome {{ current_user.username }}</h1>
         <hr>
         <form action="" method="post">
+        <div class="form-group row">
             {{ form.hidden_tag() }}
-            <p>
-                {{ form.eventname.label}} <br>
+           
+                {{ form.eventname.label}} 
                 {{form.eventname}}
                 {% for error in form.eventname.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-            </p>
-            <p>
-                {{ form.eventdate.label}} <br>
+            
+                {{ form.eventdate.label}} 
                 {{form.eventdate}}
                 {% for error in form.eventdate.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
              <p>{{ form.submit() }}</p>
-        <table>
-            <thread>
+        </form>
+    </div>
+        <table class="table table-hover">
+            <thread class="thead-dark">
                 <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
-                    <th>Attendance Number</th>
-                    <th>New Messages</th>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Event Date</th>
+                    <th scope="col">Attendance Number</th>
+                    <th scope="col">New Messages</th>
                 </tr>
             </thread>
             <tbody>{%for event in events%}

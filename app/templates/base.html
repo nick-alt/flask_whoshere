@@ -1,33 +1,42 @@
-<html>
-    <head>
-      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      {% if title %}
-      <title>{{ title }} - Whoshere</title>
-      {% else %}
-      <title>Welcome to Whoshere</title>
-      {% endif %}
-    </head>
-    <body>
-        <div> 
-            <a href="{{ url_for('index') }}">Whoshere</a>
-          <a href="{{ url_for('login') }}">Login</a>
-        </div>
-        <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-          {% for message in messages %}
-          <li>{{message}}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    </body>
-    <footer>
-       <a href="{{ url_for('imprint')}}">Imprint</a>
-       <a href="{{ url_for('privacy')}}">Privacy Policy</a>
-    </footer>
-</html>
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+  Welcome to Whoshere
+{% endblock %}
+
     
+{% block navbar %}
+  <nav class="navbar navbar-default">
+    <a href="{{ url_for('index') }}">Whoshere</a>
+    {% if current_user.is_anonymous %}
+      <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('user', username=current_user.username) }}">My Events</a>
+  </nav>
+{% endblock %} 
+
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info" role="alert">{{ message }}</div>
+      {% endfor %}  
+    {% endif %}
+    {% endwith %}    
+    
+    {% block app_content %}{% endblock %}
+  </div>
+
+
+{% block footer %}
+  <footer class="card-footer">
+    <div class="container">
+      <a href=" /imprint">Imprint</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
+  </footer>
+{% endblock %}
+{% endblock %}
