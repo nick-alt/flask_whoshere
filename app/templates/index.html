@@ -6,13 +6,12 @@
     </head>
     <body>
         <div><a href="{{ url_for('login') }}">Login</a></div>
-        <div><a href="{{ url_for('user', username=current_user.username)}}">My Events</a></div>
         <hr>
         <h1>Welcome at Whoshere</h1>
         <div><a href="{{ url_for('register')}}"> Create Event </a> </div>
     </body>
     <footer>
       <a href="/imprint">Imprint</a>
-      <a href="{{ url_for('privacy')}}">Privacy Policy</a>
+      <a href="/privacy">Privacy Policy</a>
    </footer>
 </html>
