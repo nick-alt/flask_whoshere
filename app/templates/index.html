@@ -1,17 +1,26 @@
-
- <html>
+<!DOCTYPE html>
+<html>
     <head>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;900&display=swap" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
       <title>Whoshere</title>
     </head>
     <body>
-        <div><a href="{{ url_for('login') }}">Login</a></div>
-        <hr>
-        <h1>Welcome at Whoshere</h1>
-        <div><a href="{{ url_for('register')}}"> Create Event </a> </div>
+        <div class ="login" ><a href="{{ url_for('login') }}" class= "button" >Login</a></div>
+      <div class="header">
+        <h1>Whoshere</h1>
+        </div>
+      <div class="subheader">
+        <h2> Your Attendance list tool fighting COVID-19</h2>
+        </div>
+      <div class="register">
+        <a href="{{ url_for('register')}}" class= "button"> Create Event </a> 
+      </div>
+      
     </body>
-    <footer>
-      <a href="/imprint">Imprint</a>
-      <a href="/privacy">Privacy Policy</a>
+    <footer class="footer">
+      <a href="/imprint" class= "footerlink" >Imprint</a>
+      I
+      <a href="/privacy" class= "footerlink" >Privacy Policy</a>
    </footer>
 </html>

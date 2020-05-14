@@ -1,0 +1,68 @@
+html{
+}
+
+
+
+h1{
+
+
+}
+
+body {
+  background:#EEF0F2;
+  font-family: 'Gothic A1', sans-serif;
+  display: flex; 
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+
+.button {
+  background-color: #242F40;
+  color: #FFFFFF;
+  padding: 8px 6px 6px 8px;
+  text-decoration: none;
+}
+
+
+.footer {
+  padding: 8px 6px 6px 8px;
+  background: #242F40;
+  color: #ffffff;
+  text-decoration: none;
+  margin-top: auto;
+  height: 50px;
+}
+
+
+
+.footerlink {
+  
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.header{
+  margin: 0 auto;
+  width: 200px; 
+
+}
+
+.subheader{
+  margin: 0 auto;
+  width: 600px; 
+
+}
+
+.register{
+  margin: 0 auto;
+  width: 200px; 
+
+}
+
+.login{
+  position:absolute;
+ top:10px;
+ right:10px;
+}
